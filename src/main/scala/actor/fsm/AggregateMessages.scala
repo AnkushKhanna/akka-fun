@@ -21,7 +21,7 @@ sealed case class Data[T](queue: Q[Message[T]])
 
 case class Rate(noOfMessage: Int, time: FiniteDuration)
 
-class CongregateMessages[T](f: List[T] => Unit, rate: Rate) extends Actor with FSM[State, Data[T]] {
+class AggregateMessages[T](f: List[T] => Unit, rate: Rate) extends Actor with FSM[State, Data[T]] {
 
   startWith(Idle, Data(Q[Message[T]]()))
 

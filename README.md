@@ -1,6 +1,6 @@
 # akka-fun
 
-#### CongregateMessages actor, fsm:
+#### AggregateMessages actor, fsm:
 Lets you congregate/aggregate messages and publish it back
 to the passed function.
 
