@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, FlatSpec}
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with BeforeAndAfterEach with MockitoSugar {
+class AggregateMessagesTest extends FlatSpec with BeforeAndAfterAll with BeforeAndAfterEach with MockitoSugar {
 
   implicit val actorSystem = ActorSystem.apply("CongregateMessageTest")
   var toBeCalled: ToBeCalled = _
@@ -33,7 +33,7 @@ class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with Before
 
   "CongregateMessagesActor" should
     "congregate messages and call function with List, when time expires" in {
-    val actor = TestActorRef.apply(new CongregateMessages[UpdateMessage](toBeCalled.caller, Rate(100, 1 second)))
+    val actor = TestActorRef.apply(new AggregateMessages[UpdateMessage](toBeCalled.caller, Rate(100, 1 second)))
 
     actor ! Message(UpdateMessage(100))
     actor ! Message(UpdateMessage(200))
@@ -45,7 +45,7 @@ class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with Before
 
   it should
     "congregate messages and call function when no of max messages exceeds" in {
-    val actor = TestActorRef.apply(new CongregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 10 second)))
+    val actor = TestActorRef.apply(new AggregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 10 second)))
 
     actor ! Message(UpdateMessage(10))
     actor ! Message(UpdateMessage(20))
@@ -58,7 +58,7 @@ class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with Before
   it should
     "congregate messages and call function multiple times, " +
       "if message is > 2*noOfMessage" in {
-    val actor = TestActorRef.apply(new CongregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 10 second)))
+    val actor = TestActorRef.apply(new AggregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 10 second)))
 
     actor ! Message(UpdateMessage(10))
     actor ! Message(UpdateMessage(20))
@@ -76,7 +76,7 @@ class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with Before
     "congregate messages and call function multiple times," +
       "if message is < 2*noOfMessage, " +
       "after time expires" in {
-    val actor = TestActorRef.apply(new CongregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 1 second)))
+    val actor = TestActorRef.apply(new AggregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 1 second)))
 
     actor ! Message(UpdateMessage(10))
     actor ! Message(UpdateMessage(20))
@@ -92,7 +92,7 @@ class CongregateMessagesTest extends FlatSpec with BeforeAndAfterAll with Before
     "congregate messages and call function multiple times," +
       "event if messages are send at different time " +
       "after time expires" in {
-    val actor = TestActorRef.apply(new CongregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 1 second)))
+    val actor = TestActorRef.apply(new AggregateMessages[UpdateMessage](toBeCalled.caller, Rate(3, 1 second)))
 
     actor ! Message(UpdateMessage(10))
     actor ! Message(UpdateMessage(20))
