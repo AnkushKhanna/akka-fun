@@ -16,14 +16,14 @@ Also support mapping from Json to Object.
 ```scala
 case class MyComponent(name: String)
 
-val topicName = "Topic-to-consume-from"
-val groupId = "Group-id"
+val topicNames: List[String] = List("Topic-to-consume-from")
+val groupId = "group-id"
 val kafkaConsumerProperties = new java.util.Properties()
 kafkaConsumerProperties.putAll(...)
 
-val consumer = new ConsumerKafka(kafkaConsumerProperties)
+val consumer = new ConsumerKafka[MyComponent](kafkaConsumerProperties, topicNames, groupId)
 
-consumer.map(MyComponent.class, topicName, groupId) {
+consumer.map {
   components: List[MyComponent] => 
     components.map(...)
 }
