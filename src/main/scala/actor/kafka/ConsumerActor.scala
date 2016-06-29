@@ -71,9 +71,11 @@ private class Mapper extends ObjectMapper with ScalaObjectMapper {
   this.registerModule(DefaultScalaModule)
 }
 
-class ConsumerKafka(properties: Map[String, String]) {
+class ConsumerKafka[V](properties: Map[String, String], topics: List[String], groupId: String)(implicit m: Manifest[V]) {
 
-  def map[V](c: Class[V], topics: List[String], groupId: String)(f: List[V] => Any)(implicit actorSystem: ActorSystem) = {
+  private val c = m.runtimeClass.asInstanceOf[Class[V]]
+
+  def map(f: List[V] => Any)(implicit actorSystem: ActorSystem) = {
     actorSystem.actorOf(Props.apply(new ConsumerActor[V](c, topics, groupId, f, properties)))
   }
 }
