@@ -7,7 +7,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-
 case class Message[T](c: T)
 
 class CircuitBreakerActor[T](f: T => Any) extends Actor with ActorLogging {
@@ -29,7 +28,6 @@ class CircuitBreakerActor[T](f: T => Any) extends Actor with ActorLogging {
     case s: Message[T] =>
       sender() ! breaker.withCircuitBreaker(Future(f(s.c)))
   }
-
 }
 
 
