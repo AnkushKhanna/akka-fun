@@ -9,6 +9,7 @@ libraryDependencies ++= Seq(
   "org.apache.kafka" % "kafka-clients" % "0.9.0.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.3",
   "org.json4s" %% "json4s-jackson" % "3.3.0",
+  "com.typesafe.akka" %% "akka-persistence" % "2.4.8",
   "org.mockito" % "mockito-all" % "1.8.4" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
   "com.typesafe.akka" % "akka-testkit_2.11" % "2.4.2" % "test",
