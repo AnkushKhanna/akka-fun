@@ -17,7 +17,9 @@ Also support mapping from Json to Object.
 case class MyComponent(name: String)
 
 val topicNames: List[String] = List("Topic-to-consume-from")
+
 val groupId = "group-id"
+
 val kafkaConsumerProperties = new java.util.Properties()
 kafkaConsumerProperties.putAll(...)
 
