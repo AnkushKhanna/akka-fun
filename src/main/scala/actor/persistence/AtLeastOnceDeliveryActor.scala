@@ -3,10 +3,10 @@ package actor.persistence
 import akka.actor.{Actor, ActorSelection, ActorSystem, Props}
 import akka.persistence.{AtLeastOnceDelivery, PersistentActor}
 /**
- * This all is just a very simple trying of
+ * This is just a very simple try of
  * AtLeastOnceDelivery trait.
  * To be honest there is nothing special here
- * except that you actually see it working.
+ * except that you actually see AtLeastOnceDelivery working.
  * */
 case class Msg(deliveryId: Long, s: String)
 
