@@ -17,7 +17,7 @@ import scala.language.postfixOps
 /**
  * Assumes that the messages are mapped into json.
  * Using value.serializer as "org.apache.kafka.common.serialization.StringSerializer".
- * */
+ **/
 class ConsumerKafka[V](properties: Map[String, String], topics: List[String], groupId: String)(implicit m: Manifest[V]) {
 
   private val c = m.runtimeClass.asInstanceOf[Class[V]]
@@ -29,7 +29,7 @@ class ConsumerKafka[V](properties: Map[String, String], topics: List[String], gr
 
 /**
  * Actor polling kafka consumer every 5 seconds.
- * */
+ **/
 class ConsumerActor[V](c: Class[V], topics: List[String], groupId: String, f: List[V] => Any, properties: Map[String, String]) extends Actor {
   private val consumer = new Consumer[V]()
 
@@ -58,7 +58,7 @@ object ConsumerActor {
 /**
  * Consumer, starts KafkaConsumer,
  * converts Json to object.
- * */
+ **/
 private class Consumer[V] {
 
   private val mapper = new Mapper()
@@ -67,6 +67,7 @@ private class Consumer[V] {
   def start(topics: List[String], groupId: String, properties: Map[String, String]) = {
     val prop: Properties = new Properties()
     prop.putAll(properties.asJava)
+    prop.put("group.id", groupId)
 
     kafkaConsumer = new KafkaConsumer(prop)
     kafkaConsumer.subscribe(topics.asJava)
