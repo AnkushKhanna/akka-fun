@@ -18,7 +18,7 @@ import scala.language.postfixOps
  * Assumes that the messages are mapped into json.
  * Using value.serializer as "org.apache.kafka.common.serialization.StringSerializer".
  **/
-class ConsumerKafka[V](properties: Map[String, String], topics: List[String], groupId: String)(implicit m: Manifest[V]) {
+class ConsumerKafka[V](properties: Map[String, String], topics: List[String], groupId: String)(implicit m: Manifest[V], duration: FiniteDuration) {
 
   private val c = m.runtimeClass.asInstanceOf[Class[V]]
 
@@ -30,7 +30,7 @@ class ConsumerKafka[V](properties: Map[String, String], topics: List[String], gr
 /**
  * Actor polling kafka consumer every 5 seconds.
  **/
-class ConsumerActor[V](c: Class[V], topics: List[String], groupId: String, f: List[V] => Any, properties: Map[String, String]) extends Actor {
+class ConsumerActor[V](c: Class[V], topics: List[String], groupId: String, f: List[V] => Any, properties: Map[String, String])(implicit duration: FiniteDuration) extends Actor {
   private val consumer = new Consumer[V]()
 
   import ConsumerActor._
@@ -38,14 +38,14 @@ class ConsumerActor[V](c: Class[V], topics: List[String], groupId: String, f: Li
   @throws[Exception](classOf[Exception])
   override def preStart() = {
     consumer.start(topics, groupId, properties)
-    context.system.scheduler.scheduleOnce(5 seconds, self, Consume)
+    context.system.scheduler.scheduleOnce(duration, self, Consume)
   }
 
   override def receive = {
     case Consume =>
       val messages: List[V] = consumer.consume(c)
       f(messages)
-      context.system.scheduler.scheduleOnce(5 seconds, self, Consume)
+      context.system.scheduler.scheduleOnce(duration, self, Consume)
   }
 }
 
