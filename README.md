@@ -32,3 +32,7 @@ consumer.map {
     components.map(...)
 }
 ```
+
+#### AtLeastOnceDelivery, Persistent Actor:
+Creates a Persisten actor which wraps an actor on which the message should
+be delieverd atleast once.
