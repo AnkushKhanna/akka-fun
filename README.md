@@ -34,5 +34,5 @@ consumer.map {
 ```
 
 #### AtLeastOnceDelivery, Persistent Actor:
-Creates a Persisten actor which wraps an actor on which the message should
-be delieverd atleast once.
+Creates a Persistent actor which wraps an actor on which the message should
+be delieverd at-least once.
