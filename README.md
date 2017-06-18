@@ -1,6 +1,4 @@
-# akka-fun
-
-#### AggregateMessages actor, fsm:
+### AggregateMessages actor, fsm:
 Lets you congregate/aggregate messages and publish it back
 to the passed function.
 
@@ -10,7 +8,7 @@ specified by "Rate" case class.
 
 To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/fsm/AggregateMessages.scala)
 
-####  ConsumerKafka actor, kafka:
+###  ConsumerKafka actor, kafka:
 Lets you open a consumer in a different actor, polling every 5 seconds.
 Function passed to map would be called with the result from polling.
 
@@ -35,7 +33,3 @@ consumer.map {
 }
 ```
 To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/kafka/ConsumerActor.scala)
-
-#### AtLeastOnceDelivery, Persistent Actor:
-Creates a Persistent actor which wraps an actor on which the message should
-be delieverd at-least once.
