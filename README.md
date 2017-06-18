@@ -8,6 +8,8 @@ The callback is done when either the number of messages
 exceeds a threshold or time has elapsed,
 specified by "Rate" case class.
 
+To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/fsm/AggregateMessages.scala)
+
 ####  ConsumerKafka actor, kafka:
 Lets you open a consumer in a different actor, polling every 5 seconds.
 Function passed to map would be called with the result from polling.
@@ -32,6 +34,7 @@ consumer.map {
     components.map(...)
 }
 ```
+To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/kafka/ConsumerActor.scala)
 
 #### AtLeastOnceDelivery, Persistent Actor:
 Creates a Persistent actor which wraps an actor on which the message should
