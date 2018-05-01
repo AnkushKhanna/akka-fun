@@ -23,4 +23,3 @@ class SimpleTopology(inputTopic: String, outputTopic: String) extends KafkaStrea
   }
 
 }
-
