@@ -2,11 +2,20 @@ package actor.kafka
 
 import java.util.Properties
 
-import actor.kafka.KafkaStreamActor.{Restart, Start, Stop}
+import actor.kafka.KafkaStreamActor.Start
 import akka.actor.{Actor, ActorLogging}
 import com.lightbend.kafka.scala.streams.StreamsBuilderS
 import org.apache.kafka.streams.KafkaStreams
 
+/**
+  * Start Kafka Streams in a reliable way. In case of
+  * Exception in stream, the supervisor strategy would try a restart.
+  * In case of specific exception handling, should create SupervisorStrategyConfigurator
+  * and define it in akka.actor.guardian-supervisor-strategy.
+  *
+  * @param kafkaStreamTopology defines the topology for the stream
+  * @param properties define the properties stream have to start with
+  * */
 class KafkaStreamActor(kafkaStreamTopology: KafkaStreamTopology, properties: Properties) extends Actor with ActorLogging {
   private var streams: KafkaStreams = _
 
@@ -18,23 +27,11 @@ class KafkaStreamActor(kafkaStreamTopology: KafkaStreamTopology, properties: Pro
 
     streams = new KafkaStreams(topology, properties)
 
-    streams.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler {
-      override def uncaughtException(t: Thread, e: Throwable): Unit = {
-        log.error("Restarted Stream due to", e)
-        self ! Restart
-      }
-    })
-
     streams.start()
   }
 
   override def receive: Receive = {
     case Start => start()
-    case Restart =>
-      streams.close()
-      start()
-    case Stop =>
-      streams.close()
   }
 
   override def preStart(): Unit = {
@@ -53,11 +50,4 @@ class KafkaStreamActor(kafkaStreamTopology: KafkaStreamTopology, properties: Pro
 object KafkaStreamActor {
 
   case object Start
-
-  case object Restart
-
-  case object Stop
-
-  case object StreamMetrics
-
 }
