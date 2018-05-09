@@ -13,13 +13,12 @@ class SimpleTopology(inputTopic: String, outputTopic: String) extends KafkaStrea
 
   import com.lightbend.kafka.scala.streams.DefaultSerdes._
 
-  implicit val consumed = Consumed.`with`(stringSerde, stringSerde)
-  implicit val produced = Produced.`with`(stringSerde, stringSerde)
+  implicit val consumed: Consumed[String, String] = Consumed.`with`(stringSerde, stringSerde)
+  implicit val produced: Produced[String, String] = Produced.`with`(stringSerde, stringSerde)
 
-  override def defineTopology(builder: StreamsBuilderS) = {
+  override def defineTopology(builder: StreamsBuilderS): Topology = {
     builder.stream[String, String](inputTopic)
       .to(outputTopic)
     builder.build()
   }
-
 }
