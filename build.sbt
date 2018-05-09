@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-persistence" % "2.4.8",
   "org.mockito" % "mockito-all" % "1.8.4" % "test",
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-  "com.typesafe.akka" %% "akka-testkit" % "2.4.2" % "test",
+  "com.typesafe.akka" %% "akka-testkit" % "2.5.12" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test",
   "org.apache.kafka" % "kafka-streams-test-utils" % "1.1.0" % "test"
 )
