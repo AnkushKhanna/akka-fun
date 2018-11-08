@@ -8,6 +8,8 @@ specified by "Rate" case class.
 
 To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/fsm/AggregateMessages.scala)
 
+With a recent development of [alpakka](https://developer.lightbend.com/docs/alpakka/current/), we can do this better if we are using streaming data.
+
 ###  ConsumerKafka actor, kafka:
 Lets you open a consumer in a different actor, polling every 5 seconds.
 Function passed to map would be called with the result from polling.
@@ -33,3 +35,5 @@ consumer.map {
 }
 ```
 To check it out further please see: [source-code](https://github.com/AnkushKhanna/akka-fun/blob/master/src/main/scala/actor/kafka/ConsumerActor.scala)
+
+Favor Kafka Streams now.
